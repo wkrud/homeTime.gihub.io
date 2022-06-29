@@ -55,10 +55,14 @@
     <script>
         let comeTime = 9 * 60;
         let workTime = 9 * 60;
+        let millis = 0;
         let seconds = 0;
         let minutes = 0;
         let hours = 0;
         let days = 0;
+        let krDays = '';
+        const week = ['일', '월', '화', '수', '목', '금', '토'];
+        
         $(document).ready(function(){
             $('#enter-hour').on('input', function(){
                 if(this.value > 14 || this.value <0){
@@ -111,10 +115,17 @@
             seconds = day.getSeconds();
             minutes = day.getMinutes();
             hours = day.getHours();
-            days =day.getDay();
-            let today = (day.getFullYear() + "/" + (day.getMonth() + 1) + "/" + day.getDate());
-            let time = (amPm + ' ' + curTime + ":" + day.getMinutes() + ":" + day.getSeconds());
-            let millis = day.getMilliseconds();
+            millis = day.getMilliseconds();
+            
+            days =day.getDay();            
+            krDays = week[days];
+
+            if (days == 0 || days == 6) {
+                // 주말의 경우
+            };
+
+            let today = (day.getFullYear() + "/" + (day.getMonth() + 1) + "/" + day.getDate() + " " + krDays + "요일");
+            let time = (amPm + ' ' + curTime + ":" + minutes + ":" + seconds);
             let h3Text = millis + '지루하면 보는 밀리초';
 
             var startHour = $('#enter-hour').val();
@@ -125,10 +136,10 @@
             $('#dayDiv > h3').text(h3Text);
             
             var current = (100 / (9 * 60 * 60 * 1000))
-                         * (((day.getHours() * 60 * 60 * 1000
-                            + day.getMinutes() * 60 * 1000
-                            + day.getSeconds() * 1000
-                            + day.getMilliseconds()) - 9 * 60 * 60 * 1000));
+                         * (((hours * 60 * 60 * 1000
+                            + minutes * 60 * 1000
+                            + seconds * 1000
+                            + millis) - 9 * 60 * 60 * 1000));
 
             // 시작시간 적용
             // var current = (100 / ($('#work-hour').val() * 60 * 60 * 1000 + $('#work-minute').val() * 60 * 1000))
