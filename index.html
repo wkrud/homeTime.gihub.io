@@ -66,38 +66,43 @@
         let current = 0;
         let startHour = 0;
         let endHour = 0;
+
+        let enterHour = $('#enter-hour');
+        let enterMinute = $('#enter-minute');
+        let workHour = $('#work-hour');
+        let workMinute = $('#work-minute');
         
         $(document).ready(function(){
-            $('#enter-hour').on('input', function(){
+            enterHour.on('input', function(){
                 if(this.value > 14 || this.value <0){
                     alert("제대로 적으십쇼");
-                    $('#enter-hour').val(9);
+                    enterHour.val(9);
                 }
                 else{
-                    comeTime = (this.value * 60) + $('#enter-minute').val;
+                    comeTime = (this.value * 60) + enterMinute.val;
                     calcTime();
                 } 
             })
-            $('#enter-minute').on('input', function(){
+            enterMinute.on('input', function(){
                 if(this.value > 60 || this.value <0){
                     alert("제대로 적으십쇼");
-                    $('#enter-minute').val(0);
+                    enterMinute.val(0);
                 }
-                else {comeTime = this.value + ($('#enter-hour').val*60); calcTime();}
+                else {comeTime = this.value + (enterHour.val*60); calcTime();}
             })
-            $('#work-hour').on('input', function(){
+            workHour.on('input', function(){
                 if(this.value < 0){
                     alert("제대로 적으십쇼");
-                    $('#enter-hour').val(9);
+                    enterHour.val(9);
                 }
-                else {workTime = (this.value * 60) + $('#work-minute').val; calcTime();}
+                else {workTime = (this.value * 60) + workMinute.val; calcTime();}
             })
-            $('#work-minute').on('input', function(){
+            workMinute.on('input', function(){
                 if(this.value <0 ||this.value > 60){
                     alert("제대로 적으십쇼");
-                    $('#enter-hour').val(0);
+                    enterHour.val(0);
                 }
-                else {workTime = this.value + ($('#work-hour').val*60); calcTime();}
+                else {workTime = this.value + (workHour.val*60); calcTime();}
             })
         });
         
@@ -123,8 +128,8 @@
             days =day.getDay();            
             krDays = week[days];
 
-            startHour = $('#enter-hour').val();
-            endHour = $('#enter-hour').val() * 60 * 60 * 1000 + $('#work-hour').val() * 60 * 60 * 1000;
+            startHour = enterHour.val();
+            endHour = enterHour.val() * 60 * 60 * 1000 + workHour.val() * 60 * 60 * 1000;
 
             if (days == 0 || days == 6) {
                 // 주말의 경우
@@ -195,7 +200,7 @@
                 }
             }
         }
-        
+
         function endMsg() {
             $('#day-bar').hide();
             $('#hidden-goods').text('퇴근!!!');
