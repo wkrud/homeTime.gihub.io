@@ -63,6 +63,10 @@
         let krDays = '';
         const week = ['일', '월', '화', '수', '목', '금', '토'];
         
+        let current = 0;
+        let startHour = 0;
+        let endHour = 0;
+        
         $(document).ready(function(){
             $('#enter-hour').on('input', function(){
                 if(this.value > 14 || this.value <0){
@@ -115,10 +119,12 @@
             seconds = day.getSeconds();
             minutes = day.getMinutes();
             hours = day.getHours();
-            millis = day.getMilliseconds();
-            
+            millis = day.getMilliseconds();            
             days =day.getDay();            
             krDays = week[days];
+
+            startHour = $('#enter-hour').val();
+            endHour = $('#enter-hour').val() * 60 * 60 * 1000 + $('#work-hour').val() * 60 * 60 * 1000;
 
             if (days == 0 || days == 6) {
                 // 주말의 경우
@@ -128,18 +134,15 @@
             let time = (amPm + ' ' + curTime + ":" + minutes + ":" + seconds);
             let h3Text = millis + '지루하면 보는 밀리초';
 
-            var startHour = $('#enter-hour').val();
-            var endHour = $('#enter-hour').val() * 60 * 60 * 1000 + $('#work-hour').val() * 60 * 60 * 1000;
-
             $('#dayDiv > h1').text(today);
             $('#dayDiv > h2').text(time);
             $('#dayDiv > h3').text(h3Text);
             
-            var current = (100 / (9 * 60 * 60 * 1000))
-                         * (((hours * 60 * 60 * 1000
-                            + minutes * 60 * 1000
-                            + seconds * 1000
-                            + millis) - 9 * 60 * 60 * 1000));
+            current = (100 / (9 * 60 * 60 * 1000))
+                      * (((hours * 60 * 60 * 1000
+                         + minutes * 60 * 1000
+                         + seconds * 1000
+                         + millis) - 9 * 60 * 60 * 1000));
 
             // 시작시간 적용
             // var current = (100 / ($('#work-hour').val() * 60 * 60 * 1000 + $('#work-minute').val() * 60 * 1000))
@@ -149,8 +152,8 @@
             //                 + day.getMilliseconds()) - ($('#work-hour').val() * 60 * 60 * 1000 + $('#work-minute').val() * 60 * 1000))) - startHour;
                             
             // 시작시간 적용
-            if (current <= 100 && (day.getHours() > $('#enter-hour').val() 
-            || (day.getHours() == $('#enter-hour').val() && day.getMinutes() >= $('#enter-minute').val()))) {
+            if (current <= 100 && (day.getHours() > startHour
+            || (day.getHours() == startHour && day.getMinutes() >= startHour))) {
                 let perc = Math.floor(current) + '%';
                 $('#dBar').css('width', perc);
                 $('#dBar').text(Math.floor(current * 10000) / 10000 + '%');
@@ -166,9 +169,9 @@
 
         setInterval(function() {
             thisTime();
-            calcTime();
-           
+            calcTime();           
         }, 1);
+
         function calcTime(){
             //점심 11:45분
             if(hours<=11&& minutes<=45){
@@ -192,6 +195,7 @@
                 }
             }
         }
+        
         function endMsg() {
             $('#day-bar').hide();
             $('#hidden-goods').text('퇴근!!!');
