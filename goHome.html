@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <style>
+        #day-wrapper {
+            width: 500px;
+        }
+
+        #day-bar {
+            width: 100%;
+            height: 30px;
+            background-color: grey;
+            text-align: center;
+            color: aliceblue;
+        }
+
+        #dBar {
+            width: 1%;
+            height: 30px;
+            background-color: green;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="day-wrapper">
+        <div id="dayDiv">
+            <h1></h1>
+            <h2 style="display: inline-block;"></h2>
+            <h3 style="display: inline-block;"></h3>
+        </div>
+        <div id="day-bar">
+            <div id="dBar"></div>
+        </div>
+        <div id="hidden-goods"></div>
+    </div>
+    <script>
+        
+        function thisTime () {
+            let day = new Date();
+            let amPm = '';
+            if (day.getHours() < 12) {
+                amPm = 'AM';
+            } else {
+                amPm = 'PM';
+            };
+
+            let curTime = 0;
+            if (day.getHours() == 12) {
+                curTime = day.getHours();
+            } else {
+                curTime = day.getHours() % 12;
+            };
+
+            let today = (day.getFullYear() + "/" + (day.getMonth() + 1) + "/" + day.getDate());
+            let time = (amPm + ' ' + curTime + ":" + day.getMinutes() + ":" + day.getSeconds());
+            let millis = day.getMilliseconds();
+            let h3Text = millis + '지루하면 보는 밀리초';
+
+            $('#dayDiv > h1').text(today);
+            $('#dayDiv > h2').text(time);
+            $('#dayDiv > h3').text(h3Text);
+
+            var current = (100 / (9 * 60 * 60 * 1000))
+                         * (((day.getHours()* 60 * 60 * 1000
+                            + day.getMinutes() * 60 * 1000
+                            + day.getSeconds() * 1000
+                            + day.getMilliseconds()) - 9 * 60 * 60 * 1000));
+
+            if (current <= 100 && day.getHours() >= 9) {
+                let perc = Math.floor(current) + '%';
+                $('#dBar').css('width', perc);
+                $('#dBar').text(Math.floor(current * 10000) / 10000 + '%');
+            };
+        };
+
+        setInterval(function() {
+            thisTime();
+        }, 1);
+
+        function endMsg() {
+            $('#day-bar').hide();
+            $('#hidden-goods').text('퇴근!!!');
+            $('#hidden-goods').show();
+        };
+    </script>
+
+    <!-- 댓글 기능 -->
+    <div id="disqus_thread"></div>
+    <script>
+        /**
+        *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+        *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+        /*
+        var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        */
+        (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://gohomebar.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</body>
+</html>
