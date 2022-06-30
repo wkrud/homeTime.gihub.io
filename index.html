@@ -143,12 +143,17 @@
             $('#dayDiv > h2').text(time);
             $('#dayDiv > h3').text(h3Text);
             
+            // current = (100 / (9 * 60 * 60 * 1000))
+            //           * (((hours * 60 * 60 * 1000
+            //              + minutes * 60 * 1000
+            //              + seconds * 1000
+            //              + millis) - startHour * 60 * 60 * 1000));
             current = (100 / (9 * 60 * 60 * 1000))
                       * (((hours * 60 * 60 * 1000
                          + minutes * 60 * 1000
                          + seconds * 1000
                          + millis) - 9 * 60 * 60 * 1000));
-
+                         
             // 시작시간 적용
             // var current = (100 / ($('#work-hour').val() * 60 * 60 * 1000 + $('#work-minute').val() * 60 * 1000))
             //              * (((day.getHours() * 60 * 60 * 1000
@@ -157,8 +162,8 @@
             //                 + day.getMilliseconds()) - ($('#work-hour').val() * 60 * 60 * 1000 + $('#work-minute').val() * 60 * 1000))) - startHour;
                             
             // 시작시간 적용
-            if (current <= 100 && (day.getHours() > startHour
-            || (day.getHours() == startHour && day.getMinutes() >= startHour))) {
+            if (current <= 100 && (hours > startHour
+            || (hours == startHour && minutes >= enterMinute.val()))) {
                 let perc = Math.floor(current) + '%';
                 $('#dBar').css('width', perc);
                 $('#dBar').text(Math.floor(current * 10000) / 10000 + '%');
