@@ -53,6 +53,7 @@
         <div id="hidden-goods"></div>
     </div>
     <script>
+        let amPm = '';
         let comeTime = 9 * 60;
         let workTime = 9 * 60;
         let millis = 0;
@@ -114,7 +115,7 @@
         
         function thisTime () {
             let day = new Date();
-            let amPm = '';
+            
             if (day.getHours() < 12) {
                 amPm = 'AM';
             } else {
@@ -222,7 +223,11 @@
             $('#day-bar').hide();
             $('#hidden-goods').show();
             if (res == 'END') {
-                $('#hidden-goods').text('퇴근!!!');
+                if (amPm == 'AM') {
+                    $('#hidden-goods').text('출근!!!');
+                } else {
+                    $('#hidden-goods').text('퇴근!!!');
+                }
             } else if (res = 'WEND') {
                 $('#hidden-goods').text('주말!!!');
             };
