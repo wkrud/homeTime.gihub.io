@@ -179,16 +179,17 @@
 
         function calcTime(){
             //점심 11:45분
-            if(hours<=11&& minutes<=45){
+            if(hours*60 + minutes<11* 60 + 45){
                 let time = 11*60+45 - (hours*60 + minutes);
                 $('#lunch').text(parseInt(time/60)+'시간'+(time%60)+'분 전')
             }
             else{
                 $('#lunch').text('점심 끝')
-                if(hours<= 18){  
-                    let time = 18*60-((9*60) - parseInt(comeTime)) - (hours*60 + minutes);
+            }
+            if(hours<= 18){  
+                    let time = 18 * 60-( (9 * 60) - parseInt(comeTime) ) - (hours*60 + minutes);
                     
-                    if(days ==3) {time =time -30}
+                    if(days ==3) { time = time -30 }
                    
                     if(time< 60){
                         $('#home').text((time%60)+'분 전')
@@ -197,7 +198,6 @@
                     else{
                         $('#home').text(parseInt(time/60)+'시간'+(time%60)+'분 전')
                     }
-                }
             }
         }
 
