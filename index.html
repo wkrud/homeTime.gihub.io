@@ -143,16 +143,16 @@
             $('#dayDiv > h2').text(time);
             $('#dayDiv > h3').text(h3Text);
             
-            // current = (100 / (9 * 60 * 60 * 1000))
-            //           * (((hours * 60 * 60 * 1000
-            //              + minutes * 60 * 1000
-            //              + seconds * 1000
-            //              + millis) - startHour * 60 * 60 * 1000));
             current = (100 / (9 * 60 * 60 * 1000))
                       * (((hours * 60 * 60 * 1000
                          + minutes * 60 * 1000
                          + seconds * 1000
-                         + millis) - 9 * 60 * 60 * 1000));
+                         + millis) - startHour * 60 * 60 * 1000));
+            // current = (100 / (9 * 60 * 60 * 1000))
+            //           * (((hours * 60 * 60 * 1000
+            //              + minutes * 60 * 1000
+            //              + seconds * 1000
+            //              + millis) - 9 * 60 * 60 * 1000));
                          
             // 시작시간 적용
             // var current = (100 / ($('#work-hour').val() * 60 * 60 * 1000 + $('#work-minute').val() * 60 * 1000))
