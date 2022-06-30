@@ -154,7 +154,11 @@
             $('#dayDiv > h2').text(time);
             $('#dayDiv > h3').text(h3Text);
 
-            current = (100 / (workHour.val() * 60 * 60 * 1000)) * (millisTime - millisStartHour);
+            if (days == 4) {
+                current = (100 / (workHour.val() * 60 * 60 * 1000)) * (millisTime - millisStartHour - (30 * 60 * 1000));
+            } else {
+                current = (100 / (workHour.val() * 60 * 60 * 1000)) * (millisTime - millisStartHour);
+            };
             // current = (100 / (9 * 60 * 60 * 1000))
             //           * (((hours * 60 * 60 * 1000
             //              + minutes * 60 * 1000
