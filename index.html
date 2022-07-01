@@ -42,7 +42,6 @@
                         <option value="after">오후반차</option>
                     </select>
                 </label>
-                <input type="number" id="work-hour" value="9" style="display: none;">
             </div>
             <h1></h1>
             <h2 style="display: inline-block;"></h2>
@@ -74,8 +73,7 @@
 
         let enterHour = $('#enter-hour');
         let enterMinute = $('#enter-minute');
-        let workHour = $('#work-hour');
-        let workHours = $('#work-time');
+        let workHour = $('#work-time');
         
         $(document).ready(function(){
             enterHour.on('input', function(){
@@ -102,10 +100,10 @@
                 }
                 calcMinusTime();
             })
-            workHours.on('change', calcMinusTime)
+            workHour.on('change', calcMinusTime)
         });
         function calcMinusTime(){
-            if(workHours.val() == "after"){
+            if(workHour.val() == "after"){
                 minusTime = 4 * 60;
                 if(parseInt(enterHour.val())*60 + parseInt(enterMinute.val()) <= 8 * 60){
                     minusTime = 4 * 60 + 60
