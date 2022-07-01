@@ -31,13 +31,17 @@
     <div id="day-wrapper">
         <div id="dayDiv">
             <div id="enter-time-wrapper">
-                <label for="">출근시간 : </label><br>
+                <label for="">기존 출근시간 : </label><br>
                 <input type="number" id="enter-hour" value="9">시
                 <input type="number" id="enter-minute" value="0">분
                 <br>
-                <label for="">근무시간(점심포함) : </label><br>
-                <input type="number" id="work-hour" value="9">시
-                <input type="number" id="work-minute" value="0">분
+                <label for=""> 근무시간 : 
+                    <select id="work-time">
+                        <option value="all">종일</option>
+                        <option value="before">오전반차</option>
+                        <option value="after">오후반차</option>
+                    </select>
+                </label>
             </div>
             <h1></h1>
             <h2 style="display: inline-block;"></h2>
@@ -54,7 +58,7 @@
     </div>
     <script>
         let comeTime = 9 * 60;
-        let workTime = 9 * 60;
+        let minusTime = 0;
         let millis = 0;
         let seconds = 0;
         let minutes = 0;
@@ -69,8 +73,7 @@
 
         let enterHour = $('#enter-hour');
         let enterMinute = $('#enter-minute');
-        let workHour = $('#work-hour');
-        let workMinute = $('#work-minute');
+        let workHour = $('#work-time');
         
         $(document).ready(function(){
             enterHour.on('input', function(){
@@ -83,6 +86,7 @@
                     comeTime = (parseInt(enterHour.val()) * 60) + parseInt(enterMinute.val());
                     calcTime();
                 } 
+                calcMinusTime();
             })
             enterMinute.on('input', function(){
                 comeTime = 9 * 60;
@@ -93,25 +97,22 @@
                 else {
                     comeTime = parseInt(enterMinute.val()) + (parseInt(enterHour.val())*60); 
                     calcTime();
-
                 }
+                calcMinusTime();
             })
-            workHour.on('input', function(){
-                if(this.value < 0){
-                    alert("제대로 적으십쇼");
-                    enterHour.val(9);
-                }
-                else {workTime = (this.value * 60) + workMinute.val(); calcTime();}
-            })
-            workMinute.on('input', function(){
-                if(this.value <0 ||this.value > 60){
-                    alert("제대로 적으십쇼");
-                    enterHour.val(0);
-                }
-                else {workTime = this.value + (workHour.val()*60); calcTime();}
-            })
+            workHour.on('change', calcMinusTime)
         });
-        
+        function calcMinusTime(){
+            if(workHour.val() == "after"){
+                minusTime = 4 * 60;
+                if(parseInt(enterHour.val())*60 + parseInt(enterMinute.val()) <= 8 * 60){
+                    minusTime = 4 * 60 + 60
+                }   
+            }
+            else {
+                minusTime = 0
+            }
+        }
         function thisTime () {
             let day = new Date();
             let amPm = '';
@@ -199,7 +200,7 @@
                 $('#lunch').text('점심 끝')
             }
             if(hours<= 18){  
-                    let time = 18 * 60-( (9 * 60) - parseInt(comeTime) ) - (hours*60 + minutes);
+                    let time = 18 * 60-( (9 * 60) - parseInt(comeTime) ) - (hours*60 + minutes) - minusTime;
                     
                     if(days ==3) { time = time -30 }
                    
