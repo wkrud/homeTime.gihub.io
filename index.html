@@ -68,6 +68,7 @@
         let krDays = '';
         const week = ['일', '월', '화', '수', '목', '금', '토'];
         
+        let amPm = '';
         let current = 0;
         let startHour = 0;
         let endHour = 0;
@@ -117,7 +118,7 @@
         }
         function thisTime () {
             let day = new Date();
-            let amPm = '';
+            
             if (day.getHours() < 12) {
                 amPm = 'AM';
             } else {
@@ -157,7 +158,11 @@
             $('#dayDiv > h2').text(time);
             $('#dayDiv > h3').text(h3Text);
 
-            current = (100 / (workHour.val() * 60 * 60 * 1000)) * (millisTime - millisStartHour);
+            if (days == 4) {
+                current = (100 / (workHour.val() * 60 * 60 * 1000)) * (millisTime - millisStartHour - (30 * 60 * 1000));
+            } else {
+                current = (100 / (workHour.val() * 60 * 60 * 1000)) * (millisTime - millisStartHour);
+            };
             // current = (100 / (9 * 60 * 60 * 1000))
             //           * (((hours * 60 * 60 * 1000
             //              + minutes * 60 * 1000
@@ -221,7 +226,11 @@
             $('#day-bar').hide();
             $('#hidden-goods').show();
             if (res == 'END') {
-                $('#hidden-goods').text('퇴근!!!');
+                if (amPm == 'AM') {
+                    $('#hidden-goods').text('출근!!!');
+                } else {
+                    $('#hidden-goods').text('퇴근!!!');
+                }
             } else if (res = 'WEND') {
                 $('#hidden-goods').text('주말!!!');
             };
