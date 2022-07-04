@@ -56,8 +56,37 @@
             <h2>퇴근시간 : <span id="home"></span></h2>
         </div>
         <div id="hidden-goods"></div>
-    </div>
+    </div><br>
+    <div id="clean-wrapper">
+        <div id="coffee">
+            <caption>
+                <span id="coffeeCap" style="font-weight: 700; font-size: 1.5rem; color: blueviolet;"></span>    
+            </caption>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>월</th>
+                        <th>화</th>
+                        <th>수</th>
+                        <th>목</th>
+                        <th>금</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>한아름</td>
+                        <td>진현지</td>
+                        <td>김재경</td>
+                        <td>하나현</td>
+                        <td>강혜정</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div><br>
     <script>
+        let day = new Date();
         let comeTime = 9 * 60;
         let minusTime = 0;
         let millis = 0;
@@ -77,6 +106,10 @@
         let enterMinute = $('#enter-minute');
         let workHour = $('#work-hour');
         let workHours = $('#work-time');
+
+        $(() => {
+            $('#coffeeCap').text((day.getMonth() + 1) + '월의 커피청소');
+        });
         
         $(document).ready(function(){
             enterHour.on('input', function(){
@@ -103,7 +136,7 @@
                 }
                 calcMinusTime();
             })
-            workHours.on('change', calcMinusTime)
+            workHours.on('change', calcMinusTime);
         });
         function calcMinusTime(){
             if(workHours.val() == "after"){
@@ -117,7 +150,7 @@
             }
         }
         function thisTime () {
-            let day = new Date();
+            day = new Date();
             
             if (day.getHours() < 12) {
                 amPm = 'AM';
@@ -173,6 +206,11 @@
                 let perc = Math.floor(current) + '%';
                 $('#dBar').css('width', perc);
                 $('#dBar').text(Math.floor(current * 10000) / 10000 + '%');
+                if (current >= 60) {
+                    $('#dBar').css('background-color', 'blueviolet');
+                } else {
+                    $('#dBar').css('background-color', 'green');
+                }
             };
         };
 
