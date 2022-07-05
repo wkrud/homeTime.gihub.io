@@ -109,6 +109,10 @@
 
         $(() => {
             $('#coffeeCap').text((day.getMonth() + 1) + '월의 커피청소');
+            days = day.getDay();
+            if (days > 0) {
+                $('table thead th').eq(days - 1).css('color', 'red');
+            };
         });
         
         $(document).ready(function(){
@@ -168,7 +172,7 @@
             minutes = day.getMinutes();
             hours = day.getHours();
             millis = day.getMilliseconds();            
-            days =day.getDay();            
+            days = day.getDay();            
             krDays = week[days];
 
             startHour = enterHour.val();
