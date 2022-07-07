@@ -199,7 +199,7 @@
             $('#dayDiv > h3').text(h3Text);
             
             if (days == 4) {
-                current = (100 / ((workHours.val() == 'all' ? 9 : 4) * 60 * 60 * 1000)) * (millisTime - millisStartHour - (30 * 60 * 1000));
+                current = (100 / ((workHours.val() == 'all' ? 9 : 4) * 60 * 60 * 1000)) * (millisTime - millisStartHour + (30 * 60 * 1000));
             } else {
                 current = (100 / ((workHours.val() == 'all' ? 9 : 4) * 60 * 60 * 1000)) * (millisTime - millisStartHour);
             };
