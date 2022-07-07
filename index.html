@@ -25,16 +25,26 @@
             background-color: green;
             text-align: center;
         }
+
+        input {
+            width: 30px;
+        }
+
+        label {
+            font-size: 1.5rem;
+            color: lightsalmon;
+            font-weight: bolder;
+        }
     </style>
 </head>
 <body>
     <div id="day-wrapper">
         <div id="dayDiv">
             <div id="enter-time-wrapper">
-                <label for="">기존 출근시간 : </label><br>
-                <input type="number" id="enter-hour" value="9">시
-                <input type="number" id="enter-minute" value="0">분
-                <br>
+                <label for="">출근시간 : 
+                    <input type="number" id="enter-hour" value="9"><span style="color: black;">시</span>
+                    <input type="number" id="enter-minute" value="0"><span style="color: black;">분</span>
+                </label><br><br>
                 <label for=""> 근무시간 : 
                     <select id="work-time">
                         <option value="all">종일</option>
@@ -43,7 +53,7 @@
                     </select>
                 </label>
                 <input type="number" id="work-hour" value="9" style="display: none;">
-            </div>
+            </div><br><hr>
             <h1></h1>
             <h2 style="display: inline-block;"></h2>
             <h3 style="display: inline-block;"></h3>
@@ -111,7 +121,7 @@
             $('#coffeeCap').text((day.getMonth() + 1) + '월의 커피청소');
             days = day.getDay();
             if (days > 0) {
-                $('table thead th').eq(days - 1).css('color', 'red');
+                $('table thead th').eq(days - 1).css({'color' : 'red', 'font-size' : '1.5rem'});
             };
         });
         
@@ -200,6 +210,9 @@
             
             if (days == 4) {
                 current = (100 / ((workHours.val() == 'all' ? 9 : 4) * 60 * 60 * 1000)) * (millisTime - millisStartHour + (30 * 60 * 1000));
+            } else if (days == 5) {
+                current = (100 / ((workHours.val() == 'all' ? 9 : 4) * 60 * 60 * 1000)) * (millisTime - millisStartHour);
+                $('#dayDiv > h1').css({'color' : 'red', 'font-size' : '2.5rem'});
             } else {
                 current = (100 / ((workHours.val() == 'all' ? 9 : 4) * 60 * 60 * 1000)) * (millisTime - millisStartHour);
             };
@@ -212,6 +225,8 @@
                 $('#dBar').text(Math.floor(current * 10000) / 10000 + '%');
                 if (current >= 60) {
                     $('#dBar').css('background-color', 'blueviolet');
+                } else if (current >= 95) {
+                    $('#dBar').css('background-color', 'red');
                 } else {
                     $('#dBar').css('background-color', 'green');
                 }
