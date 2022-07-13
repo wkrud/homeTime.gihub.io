@@ -253,8 +253,13 @@
                     if(days ==3) { time = time -30 }
                    
                     if(time< 60){
-                        $('#home').text((time%60)+'분 전')
-                        $('#home').css('color', 'red');
+                        if (time % 60 < 0) {
+                            $('#home').text('+' + ((time%60) * -1)+'분 야근중')
+                            $('#home').css('color', 'red');
+                        } else {
+                            $('#home').text((time%60)+'분 전')
+                            $('#home').css('color', 'red');
+                        }
                     }
                     else{
                         $('#home').text(parseInt(time/60)+'시간'+(time%60)+'분 전')
