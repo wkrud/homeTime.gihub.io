@@ -40,6 +40,9 @@
 <body>
     <div id="day-wrapper">
         <div id="dayDiv">
+            <div id="soul" style="opacity: .1;">
+                진현지, 하나현
+            </div>
             <div id="enter-time-wrapper">
                 <label for="">출근시간 : 
                     <input type="number" id="enter-hour" value="8"><span style="color: black;">시</span>
@@ -65,8 +68,11 @@
             <h2>점심시간 : <span id="lunch"></span></h2>
             <h2>퇴근시간 : <span id="home"></span></h2>
         </div>
-        <div id="hidden-goods"></div>
     </div><br>
+    <div>
+
+
+    </div>
     <div id="clean-wrapper">
         <div id="coffee">
             <caption>
@@ -95,9 +101,29 @@
             </table>
         </div>
     </div><br>
+    <!-- <div class="calendar-wrapper">
+        <table class="calendar">
+            <thead>
+                <tr>
+                    <th>일</th>
+                    <th>월</th>
+                    <th>화</th>
+                    <th>수</th>
+                    <th>목</th>
+                    <th>금</th>
+                    <th>토</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div> -->
     <script>
         let day = new Date();
-        let comeTime = 8 * 60;
+        let comeTime = 9 * 60;
         let minusTime = 0;
         let millis = 0;
         let seconds = 0;
